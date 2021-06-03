@@ -61,7 +61,7 @@ jobs:
           # cache files are stored in `~/apps` on Linux/macOS
           path: |
             apps
-          key: ${{ runner.os }}-${{ matrix.mpi_impl}}-${{ matrix.armci_network}}-${{ matrix.cc }}-${{ matrix.c++ }}-${{ matrix.config_opts}}-gfcc-v000
+          key: ${{ runner.os }}-${{ matrix.mpi_impl}}-${{ matrix.armci_network}}-${{ matrix.cc }}-${{ matrix.cxx }}-${{ matrix.config_opts}}-gfcc-v000
 
       - name: install_packages
         run: |
