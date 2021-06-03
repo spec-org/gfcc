@@ -67,10 +67,10 @@ jobs:
         run: |
           case "${{ matrix.os }}" in
           ubuntu*|jessie|stretch|buster)
-          apt-get update -q -y
+          sudo apt-get update -q -y
           if [[ "$mpi_impl" == "openmpi" ]] ; then mpi_bin="openmpi-bin" ; mpi_libdev="libopenmpi-dev" ;  fi
           if [[ "$mpi_impl" == "mpich" ]] ; then mpi_bin="mpich" ; mpi_libdev="libmpich-dev" ;  fi
-          apt-get install -q -y cmake "${mpi_bin}" "${mpi_libdev}" gfortran curl
+          sudo apt-get install -q -y cmake "${mpi_bin}" "${mpi_libdev}" gfortran curl
           curl -LJO https://github.com/Kitware/CMake/releases/download/v3.18.4/cmake-3.18.4-Linux-x86_64.tar.gz
           tar xzf cmake-3.18.4-Linux-x86_64.tar.gz
           export PATH=`pwd`/cmake-3.18.4-Linux-x86_64/bin:$PATH
