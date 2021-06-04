@@ -71,21 +71,20 @@ jobs:
           sudo apt-get install -q -y cmake "${mpi_bin}" "${mpi_libdev}" gfortran curl
           curl -LJO https://github.com/Kitware/CMake/releases/download/v3.18.4/cmake-3.18.4-Linux-x86_64.tar.gz
           tar xzf cmake-3.18.4-Linux-x86_64.tar.gz
-          export PATH=`pwd`/cmake-3.18.4-Linux-x86_64/bin:$PATH
           ;;
           macos*)
           brew update
           brew install gcc openmpi cmake wget autoconf automake || true
           curl -LJO https://github.com/Kitware/CMake/releases/download/v3.18.4/cmake-3.18.4-Darwin-x86_64.tar.gz
           tar xzf cmake-3.18.4-Darwin-x86_64.tar.gz
-          export PATH=`pwd`/cmake-3.18.4-Linux-x86_64/bin:$PATH
           ;;
           esac
+          export PATH=`pwd`/cmake-3.18.4-`uname -s`-x86_64/bin:$PATH
       - name: before_compile
         if: steps.gfcc-cache-install.outputs.cache-hit != 'true'
         run: |
-          export GFCC_SRC=$GITHUB_WORKSPACE/gfcc
-          export GFCC_INSTALL_PATH=$GITHUB_WORKSPACE/gfcc_install
+          export GFCC_SRC=$GITHUB_WORKSPACE
+          export GFCC_INSTALL_PATH=$GITHUB_WORKSPACE/../gfcc_install
           pwd
           ls -lart
           mkdir -p $GITHUB_WORKSPACE/apps
@@ -95,8 +94,8 @@ jobs:
       - name: compile_gfcc
         if: ${{ success() }}
         run: |
-          export GFCC_SRC=$GITHUB_WORKSPACE/gfcc
-          export GFCC_INSTALL_PATH=$GITHUB_WORKSPACE/gfcc_install
+          export GFCC_SRC=$GITHUB_WORKSPACE
+          export GFCC_INSTALL_PATH=$GITHUB_WORKSPACE/../gfcc_install
           export PATH=`pwd`/cmake-3.18.4-`uname -s`-x86_64/bin:$PATH
           cd ${GFCC_SRC}/contrib/TAMM 
           mkdir build && cd build
