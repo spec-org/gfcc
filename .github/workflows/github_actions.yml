@@ -44,8 +44,6 @@ jobs:
         CXX: ${{ matrix.cxx }}
         CC: ${{ matrix.cc }}
         FC: ${{ matrix.fc }}
-        GFCC_SRC: ${{ GITHUB_WORKSPACE }}/gfcc
-        GFCC_INSTALL_PATH: ${{ HOME }}/gfcc_install
     continue-on-error: ${{ matrix.experimental }}
     steps: 
       - name: Checkout code
@@ -86,6 +84,8 @@ jobs:
       - name: before_compile
         if: steps.gfcc-cache-install.outputs.cache-hit != 'true'
         run: |
+          export GFCC_SRC=$GITHUB_WORKSPACE/gfcc
+          export GFCC_INSTALL_PATH=$GITHUB_WORKSPACE/gfcc_install
           pwd
           ls -lart
           mkdir -p $GITHUB_WORKSPACE/apps
@@ -95,6 +95,8 @@ jobs:
       - name: compile_gfcc
         if: ${{ success() }}
         run: |
+          export GFCC_SRC=$GITHUB_WORKSPACE/gfcc
+          export GFCC_INSTALL_PATH=$GITHUB_WORKSPACE/gfcc_install
           export PATH=`pwd`/cmake-3.18.4-`uname -s`-x86_64/bin:$PATH
           cd ${GFCC_SRC}/contrib/TAMM 
           mkdir build && cd build
