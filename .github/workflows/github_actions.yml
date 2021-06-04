@@ -44,8 +44,8 @@ jobs:
         CXX: ${{ matrix.cxx }}
         CC: ${{ matrix.cc }}
         FC: ${{ matrix.fc }}
-        GFCC_SRC: ${{GITHUB_WORKSPACE}}/gfcc
-        GFCC_INSTALL_PATH: ${{HOME}}/gfcc_install
+        GFCC_SRC: ${{ GITHUB_WORKSPACE }}/gfcc
+        GFCC_INSTALL_PATH: ${{ HOME }}/gfcc_install
     continue-on-error: ${{ matrix.experimental }}
     steps: 
       - name: Checkout code
