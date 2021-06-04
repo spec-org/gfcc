@@ -79,7 +79,7 @@ jobs:
           tar xzf cmake-3.18.4-`uname -s`-x86_64.tar.gz
           export PATH=`pwd`/cmake-3.18.4-`uname -s`-x86_64/bin:$PATH
       - name: before_compile
-        if: steps.gfcc-cache-install.outputs.cache-hit = 'true'
+        if: steps.gfcc-cache-install.outputs.cache-hit == 'true'
         run: |
           export GFCC_SRC=$GITHUB_WORKSPACE
           export GFCC_INSTALL_PATH=$GITHUB_WORKSPACE/../gfcc_install
