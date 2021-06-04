@@ -79,13 +79,13 @@ jobs:
           tar xzf cmake-3.18.4-`uname -s`-x86_64.tar.gz
           export PATH=`pwd`/cmake-3.18.4-`uname -s`-x86_64/bin:$PATH
       - name: before_compile
-        if: steps.gfcc-cache-install.outputs.cache-hit != 'true'
+        if: steps.gfcc-cache-install.outputs.cache-hit = 'true'
         run: |
           export GFCC_SRC=$GITHUB_WORKSPACE
           export GFCC_INSTALL_PATH=$GITHUB_WORKSPACE/../gfcc_install
           pwd
           ls -lart
-          mkdir -p ${GFCC_INSTALL_PATH} || true
+          mkdir -p ${GFCC_INSTALL_PATH} ~/gfcc_cache || true
           rsync -av  ~/gfcc_cache/* ${GFCC_INSTALL_PATH}/.
           ls -lrt ${GFCC_INSTALL_PATH} || true
           ls -lrt ${GFCC_INSTALL_PATH}/lib || true
@@ -100,12 +100,12 @@ jobs:
           cd ${GFCC_SRC}/contrib/TAMM 
           mkdir build && cd build
           cmake -DCMAKE_INSTALL_PREFIX=${GFCC_INSTALL_PATH} ..
-          make -j2
+          make -j4
           make install
           cd ${GFCC_SRC}
           mkdir build && cd build
           cmake -DCMAKE_INSTALL_PREFIX=${GFCC_INSTALL_PATH} ..
-          make -j2
+          make -j4
           make install
           rsync -av --exclude="*gfcc*" --exclude="*tamm*" ${GFCC_INSTALL_PATH}/* ~/gfcc_cache/.
       - name: after_failure
