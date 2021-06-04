@@ -88,15 +88,15 @@ jobs:
           pwd
           ls -lart
           mkdir -p $GITHUB_WORKSPACE/apps
-          echo GFCC_SRC is ${GFCC_SRC}
-          echo ls on GFCC_SRC
-          ls ${GFCC_SRC}
       - name: compile_gfcc
         if: ${{ success() }}
         run: |
           export GFCC_SRC=$GITHUB_WORKSPACE
           export GFCC_INSTALL_PATH=$GITHUB_WORKSPACE/../gfcc_install
           export PATH=`pwd`/cmake-3.18.4-`uname -s`-x86_64/bin:$PATH
+          mpicxx -show || true
+          mpicxx -v || true
+          dpkg-query -s mpif90 || true
           cd ${GFCC_SRC}/contrib/TAMM 
           mkdir build && cd build
           cmake -DCMAKE_INSTALL_PREFIX=${GFCC_INSTALL_PATH} ..
